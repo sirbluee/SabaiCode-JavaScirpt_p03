@@ -1,40 +1,19 @@
-const fs = require("fs");
+const { writeFile } = require("fs");
+const readFileAsync = require("./3");
+ 
+readFileAsync('output.txt', (content1)=>{
+    const modefiedContext1 = content1 + "\nFirst";
 
-// read output.txt
-function readContext(filepath, callback) {
-  fs.readFile(filepath, "utf8", (error, data) => {
-    if (error) {
-      console.log("Error reading", error);
-      return;
-    }
-    callback(data);
-  });
-}
+    writeFile('output1.txt', modefiedContext1, ()=>{
+        readFileAsync('output1.txt', (content2)=>{
+            const modefiedContext2 = content2 + "\nTwo";
 
-// write output1.txt
-function writeContext(filepath, context, callback) {
-  fs.writeFile(filepath, context, "utf-8", (error) => {
-    if (error) {
-      console.log("Error writing", error);
-      return;
-    }
-  });
-  callback();
-}
+            writeFile('output2.txt', modefiedContext2, ()=>{
+                readFileAsync('output2.txt', (finalRead)=>{
+                    console.log(`${finalRead}\n`)
+                })
+            })
 
-// implement
-readContext("output.txt", (context1) => {
-  const modefiedContext1 = context1;
-
-  writeContext("output1.txt", modefiedContext1, () => {
-    readContext("output1.txt", (context2) => {
-      const modefiedContext2 = context2;
-
-      writeContext("output2.txt", modefiedContext2, () => {
-        readContext("output2.txt", (finalRead) => {
-          console.log("Final Read from output2.txt: ", finalRead);
-        });
-      });
-    });
-  });
-});
+        })
+    })
+})

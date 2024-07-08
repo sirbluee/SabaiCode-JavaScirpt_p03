@@ -1,4 +1,3 @@
-const { error } = require('node:console');
 const fs = require('node:fs');
 function writeFile(filepath, context, callback) {
 
@@ -13,3 +12,5 @@ function writeFile(filepath, context, callback) {
 writeFile('output.txt', 'Hello world!🦖', ()=>{
     console.log("File written.")
 })
+
+module.exports = writeFile

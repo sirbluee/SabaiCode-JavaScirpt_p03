@@ -12,3 +12,5 @@ readFileAsync('input.txt', (data)=>{
     return console.log(data);
 })
 
+
+module.exports = readFileAsync
